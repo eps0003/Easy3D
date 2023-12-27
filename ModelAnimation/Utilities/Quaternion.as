@@ -226,7 +226,7 @@ shared class Quaternion
 		this.w = cr * cp * cy + sr * sp * sy;
 		this.x = sr * cp * cy - cr * sp * sy;
 		this.y = cr * sp * cy + sr * cp * sy;
-    	this.z = cr * cp * sy - sr * sp * cy;
+		this.z = cr * cp * sy - sr * sp * cy;
 	}
 
 	void Print(uint precision = 3)

@@ -3,6 +3,7 @@ shared class Model
 	private SMesh mesh;
 	private string texture;
 
+	private Vec3f origin;
 	private Vec3f translation;
 	private Quaternion rotation;
 	private Vec3f scale = Vec3f(1);
@@ -26,7 +27,13 @@ shared class Model
 		material.SetFlag(SMaterial::BACK_FACE_CULLING, false);
 		material.SetFlag(SMaterial::FOG_ENABLE, true);
 		material.SetMaterialType(SMaterial::TRANSPARENT_ALPHA_CHANNEL_REF);
+
 		mesh.SetMaterial(material);
+	}
+
+	void SetOrigin(Vec3f origin)
+	{
+		this.origin = origin;
 	}
 
 	void SetTranslation(Vec3f translation)
@@ -51,16 +58,15 @@ shared class Model
 
 	void Render()
 	{
-		CMatrix positionMatrix;
+		CMatrix positionMatrix, rotationMatrix, originMatrix, scaleMatrix;
+
 		positionMatrix.SetTranslation(translation);
-
-		CMatrix rotationMatrix;
 		rotationMatrix.SetRotationRadians(-rotation.toEulerRadians());
-
-		CMatrix scaleMatrix;
+		originMatrix.SetTranslation(-origin);
 		scaleMatrix.SetScale(scale);
 
-		CMatrix matrix = positionMatrix * scaleMatrix * rotationMatrix;
+		// https://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/#cumulating-transformations
+		CMatrix matrix = positionMatrix * (rotationMatrix * scaleMatrix * originMatrix);
 		Render::SetModelTransform(matrix.toArray());
 
 		mesh.RenderMeshWithMaterial();

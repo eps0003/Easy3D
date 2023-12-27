@@ -5,5 +5,5 @@
 
 shared float getAspectRatio()
 {
-    return getScreenWidth() / float(getScreenHeight());
+	return getScreenWidth() / float(getScreenHeight());
 }

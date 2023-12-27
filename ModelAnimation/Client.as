@@ -18,15 +18,23 @@ void onInit(CRules@ this)
 	@camera = Camera();
 	@model = Model("ActorHead.obj", "KnightSkin.png");
 
-	model.SetTranslation(Vec3f(0, 0, 2));
 
 	Quaternion rotation;
 	rotation.SetFromEulerDegrees(0, 180, 0);
+
+	model.SetTranslation(Vec3f(0, 0, 2));
+	model.SetOrigin(Vec3f(0, 0.25f, 0));
 	model.SetRotation(rotation);
 }
 
 void onRender(CRules@ this)
 {
+	uint w = getScreenWidth();
+	uint h = getScreenHeight();
+
+	GUI::DrawRectangle(Vec2f(0, h * 0.5f - 1), Vec2f(w, h * 0.5f + 1), color_white);
+	GUI::DrawRectangle(Vec2f(w * 0.5f - 1, 0), Vec2f(w * 0.5f + 1, h), color_white);
+
 	GUI::DrawText("Position: " + camera.getPosition().toString(), Vec2f(10, 10), color_white);
 }
 
