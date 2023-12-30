@@ -1,7 +1,9 @@
 shared class Animator
 {
 	private Model@ model;
-	private IAnimation@ animation;
+
+	private dictionary animations;
+	private string animationName;
 
 	private Vec3f prevOrigin;
 	private Vec3f prevTranslation;
@@ -9,7 +11,8 @@ shared class Animator
 	private Quaternion prevRotation;
 
 	private float transitionStartTime = 0.0f;
-	private float transitionDuration = 0.5f * getTicksASecond();
+	private float defaultTransitionDuration = 0.3f * getTicksASecond();
+	private float transitionDuration = 0.0f;
 
 	Animator(Model@ model)
 	{
@@ -17,19 +20,39 @@ shared class Animator
 		SetPreviousValues();
 	}
 
-	void SetAnimation(IAnimation@ animation)
+	Animator(Model@ model, float defaultTransitionDuration)
 	{
-		if (this.animation is animation) return;
-
-		@this.animation = animation;
-
+		@this.model = model;
+		this.defaultTransitionDuration = defaultTransitionDuration;
 		SetPreviousValues();
+	}
+
+	void RegisterAnimation(string name, IAnimation@ animation)
+	{
+		if (name == "" || animation is null) return;
+
+		animations.set(name, @animation);
+	}
+
+	void SetAnimation(string name)
+	{
+		SetAnimation(name, defaultTransitionDuration);
+	}
+
+	void SetAnimation(string name, float transitionDuration)
+	{
+		if (animationName == name) return;
+
+		animationName = name;
+		this.transitionDuration = transitionDuration;
 		transitionStartTime = getGameTime();
+		SetPreviousValues();
 	}
 
 	void Animate()
 	{
-		if (animation is null) return;
+		IAnimation@ animation;
+		if (!animations.get(animationName, @animation)) return;
 
 		float t = getGameTime();
 

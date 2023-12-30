@@ -13,8 +13,6 @@ const float RENDER_DISTANCE = 9999.0f;
 Camera@ camera;
 Model@ model;
 Animator@ animator;
-TestAnimation1@ animation1;
-TestAnimation2@ animation2;
 
 void onInit(CRules@ this)
 {
@@ -29,19 +27,20 @@ void onInit(CRules@ this)
 	model.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
 
 	@animator = Animator(model);
-	@animation1 = TestAnimation1(model);
-	@animation2 = TestAnimation2(model);
+	animator.RegisterAnimation("test1", TestAnimation1(model));
+	animator.RegisterAnimation("test2", TestAnimation2(model));
+	animator.SetAnimation("test1");
 }
 
 void onTick(CRules@ this)
 {
 	if (getControls().isKeyPressed(KEY_SPACE))
 	{
-		animator.SetAnimation(animation2);
+		animator.SetAnimation("test2");
 	}
 	else
 	{
-		animator.SetAnimation(animation1);
+		animator.SetAnimation("test1", 0);
 	}
 }
 
