@@ -64,6 +64,6 @@ void Render(int id)
 	Render::ClearZ();
 
 	camera.Render();
-	animator.Update();
+	animator.Animate();
 	model.Render();
 }

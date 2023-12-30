@@ -17,14 +17,6 @@ shared class Animator
 		SetPreviousValues();
 	}
 
-	private void SetPreviousValues()
-	{
-		prevOrigin = model.getOrigin();
-		prevTranslation = model.getTranslation();
-		prevScale = model.getScale();
-		prevRotation = model.getRotation();
-	}
-
 	void SetAnimation(IAnimation@ animation)
 	{
 		if (this.animation is animation) return;
@@ -33,10 +25,9 @@ shared class Animator
 
 		SetPreviousValues();
 		transitionStartTime = getGameTime();
-		print("Change animation " + getGameTime());
 	}
 
-	void Update()
+	void Animate()
 	{
 		if (animation is null) return;
 
@@ -44,7 +35,7 @@ shared class Animator
 
 		if (transitionStartTime > 0.0f && t - transitionStartTime < transitionDuration)
 		{
-			float tLerp = (t - transitionStartTime) / transitionDuration;
+			float tLerp = Easing::inOutQuad((t - transitionStartTime) / transitionDuration);
 
 			model.SetOrigin(prevOrigin.lerp(animation.getOrigin(t), tLerp));
 			model.SetTranslation(prevTranslation.lerp(animation.getTranslation(t), tLerp));
@@ -58,5 +49,13 @@ shared class Animator
 			model.SetScale(animation.getScale(t));
 			model.SetRotation(animation.getRotation(t));
 		}
+	}
+
+	private void SetPreviousValues()
+	{
+		prevOrigin = model.getOrigin();
+		prevTranslation = model.getTranslation();
+		prevScale = model.getScale();
+		prevRotation = model.getRotation();
 	}
 }
