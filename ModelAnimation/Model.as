@@ -8,6 +8,8 @@ shared class Model
 	private Vec3f scale = Vec3f(1);
 	private Quaternion rotation;
 
+	private CMatrix matrix;
+
 	Model(string modelPath, string texture)
 	{
 		mesh.LoadObjIntoMesh(modelPath);
@@ -61,6 +63,11 @@ shared class Model
 		this.scale = scale;
 	}
 
+	CMatrix@ getMatrix()
+	{
+		return matrix;
+	}
+
 	Quaternion getRotation()
 	{
 		return rotation;
@@ -76,7 +83,7 @@ shared class Model
 		SetMaterial(texture);
 	}
 
-	void Render()
+	void Render(CMatrix matrix = CMatrix())
 	{
 		CMatrix positionMatrix, rotationMatrix, originMatrix, scaleMatrix;
 
@@ -86,8 +93,8 @@ shared class Model
 		scaleMatrix.SetScale(scale);
 
 		// https://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/#cumulating-transformations
-		CMatrix matrix = positionMatrix * (rotationMatrix * scaleMatrix * originMatrix);
-		Render::SetModelTransform(matrix.toArray());
+		this.matrix = matrix * positionMatrix * (rotationMatrix * scaleMatrix * originMatrix);
+		Render::SetModelTransform(this.matrix.toArray());
 
 		mesh.RenderMeshWithMaterial();
 	}

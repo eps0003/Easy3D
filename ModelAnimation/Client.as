@@ -4,14 +4,12 @@
 #include "Animator.as"
 #include "IAnimation.as"
 #include "TestAnimation.as"
+#include "CompositeModel.as"
 
 #define CLIENT_ONLY
 
-const float FOV = 90.0f;
-const float RENDER_DISTANCE = 9999.0f;
-
 Camera@ camera;
-Model@ model;
+CompositeModel@ model;
 Animator@ animator;
 
 void onInit(CRules@ this)
@@ -21,26 +19,54 @@ void onInit(CRules@ this)
 
 	@camera = Camera();
 
-	@model = Model("ActorHead.obj", "KnightSkin.png");
-	model.SetTranslation(Vec3f(0, 0, 2));
-	model.SetOrigin(Vec3f(0, 0.25f, 0));
-	model.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
+	// Initialize
+	string texture = "KnightSkin.png";
+	Model body("ActorBody.obj", texture);
+	Model head("ActorHead.obj", texture);
+	Model upperLeftArm("ActorUpperLeftArm.obj", texture);
+	Model lowerLeftArm("ActorLowerLeftArm.obj", texture);
+	Model upperRightArm("ActorUpperRightArm.obj", texture);
+	Model lowerRightArm("ActorLowerRightArm.obj", texture);
+	Model upperLeftLeg("ActorUpperLeftLeg.obj", texture);
+	Model lowerLeftLeg("ActorLowerLeftLeg.obj", texture);
+	Model upperRightLeg("ActorUpperRightLeg.obj", texture);
+	Model lowerRightLeg("ActorLowerRightLeg.obj", texture);
 
-	@animator = Animator(model);
-	animator.RegisterAnimation("test1", TestAnimation1(model));
-	animator.RegisterAnimation("test2", TestAnimation2(model));
-	animator.SetAnimation("test1");
+	// Compose
+	@model = CompositeModel(body)
+		.Append(CompositeModel(head))
+		.Append(CompositeModel(upperLeftArm).Append(CompositeModel(lowerLeftArm)))
+		.Append(CompositeModel(upperRightArm).Append(CompositeModel(lowerRightArm)))
+		.Append(CompositeModel(upperLeftLeg).Append(CompositeModel(lowerLeftLeg)))
+		.Append(CompositeModel(upperRightLeg).Append(CompositeModel(lowerRightLeg)));
+
+	// Arrange
+	body.SetTranslation(Vec3f(0, 0.75f, 2.0f));
+	body.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
+	head.SetTranslation(Vec3f(0, 0.75f, 0));
+	upperLeftArm.SetTranslation(Vec3f(-0.25f, 0.75f, 0));
+	lowerLeftArm.SetTranslation(Vec3f(-0.125f, -0.375f, -0.125f));
+	upperRightArm.SetTranslation(Vec3f(0.25f, 0.75f, 0));
+	lowerRightArm.SetTranslation(Vec3f(0.125f, -0.375f, -0.125f));
+	lowerLeftLeg.SetTranslation(Vec3f(-0.125f, -0.375f, 0.125f));
+	lowerRightLeg.SetTranslation(Vec3f(0.125f, -0.375f, 0.125f));
+
+	// Animate
+	@animator = Animator(body);
+	animator.Register("test1", TestAnimation1(body));
+	animator.Register("test2", TestAnimation2(body));
+	animator.Transition("test1");
 }
 
 void onTick(CRules@ this)
 {
 	if (getControls().isKeyPressed(KEY_SPACE))
 	{
-		animator.SetAnimation("test2");
+		animator.Transition("test2");
 	}
 	else
 	{
-		animator.SetAnimation("test1", 0);
+		animator.Transition("test1", 0);
 	}
 }
 

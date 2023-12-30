@@ -27,19 +27,22 @@ shared class Animator
 		SetPreviousValues();
 	}
 
-	void RegisterAnimation(string name, IAnimation@ animation)
+	Animator@ Register(string name, IAnimation@ animation)
 	{
-		if (name == "" || animation is null) return;
+		if (name != "" && animation !is null)
+		{
+			animations.set(name, @animation);
+		}
 
-		animations.set(name, @animation);
+		return this;
 	}
 
-	void SetAnimation(string name)
+	void Transition(string name)
 	{
-		SetAnimation(name, defaultTransitionDuration);
+		Transition(name, defaultTransitionDuration);
 	}
 
-	void SetAnimation(string name, float transitionDuration)
+	void Transition(string name, float transitionDuration)
 	{
 		if (animationName == name) return;
 
