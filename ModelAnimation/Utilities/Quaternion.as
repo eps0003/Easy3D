@@ -198,23 +198,26 @@ shared class Quaternion
 		return Vec3f(Maths::toDegrees(euler.x), Maths::toDegrees(euler.y), Maths::toDegrees(euler.z));
 	}
 
-	void SetFromEulerDegrees(Vec3f euler)
+	Quaternion@ SetFromEulerDegrees(Vec3f euler)
 	{
 		SetFromEulerDegrees(euler.x, euler.y, euler.z);
+		return this;
 	}
 
-	void SetFromEulerDegrees(float x, float y, float z)
+	Quaternion@ SetFromEulerDegrees(float x, float y, float z)
 	{
 		SetFromEulerRadians(Maths::toRadians(x), Maths::toRadians(y), Maths::toRadians(z));
+		return this;
 	}
 
-	void SetFromEulerRadians(Vec3f euler)
+	Quaternion@ SetFromEulerRadians(Vec3f euler)
 	{
 		SetFromEulerRadians(euler.x, euler.y, euler.z);
+		return this;
 	}
 
 	// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Source_code
-	void SetFromEulerRadians(float x, float y, float z)
+	Quaternion@ SetFromEulerRadians(float x, float y, float z)
 	{
 		float cr = Maths::Cos(x * 0.5f);
 		float sr = Maths::Sin(x * 0.5f);
@@ -227,6 +230,8 @@ shared class Quaternion
 		this.x = sr * cp * cy - cr * sp * sy;
 		this.y = cr * sp * cy + sr * cp * sy;
 		this.z = cr * cp * sy - sr * sp * cy;
+
+		return this;
 	}
 
 	void Print(uint precision = 3)

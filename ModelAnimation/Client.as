@@ -1,6 +1,9 @@
 #include "Utilities.as"
 #include "Camera.as"
 #include "Model.as"
+#include "Animator.as"
+#include "IAnimation.as"
+#include "TestAnimation.as"
 
 #define CLIENT_ONLY
 
@@ -9,6 +12,9 @@ const float RENDER_DISTANCE = 9999.0f;
 
 Camera@ camera;
 Model@ model;
+Animator@ animator;
+TestAnimation1@ animation1;
+TestAnimation2@ animation2;
 
 void onInit(CRules@ this)
 {
@@ -16,15 +22,27 @@ void onInit(CRules@ this)
 	Render::addScript(Render::layer_prehud, "Client.as", "Render", 0);
 
 	@camera = Camera();
+
 	@model = Model("ActorHead.obj", "KnightSkin.png");
-
-
-	Quaternion rotation;
-	rotation.SetFromEulerDegrees(0, 180, 0);
-
 	model.SetTranslation(Vec3f(0, 0, 2));
 	model.SetOrigin(Vec3f(0, 0.25f, 0));
-	model.SetRotation(rotation);
+	model.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
+
+	@animator = Animator(model);
+	@animation1 = TestAnimation1(model);
+	@animation2 = TestAnimation2(model);
+}
+
+void onTick(CRules@ this)
+{
+	if (getControls().isKeyPressed(KEY_SPACE))
+	{
+		animator.SetAnimation(animation2);
+	}
+	else
+	{
+		animator.SetAnimation(animation1);
+	}
 }
 
 void onRender(CRules@ this)
@@ -46,5 +64,6 @@ void Render(int id)
 	Render::ClearZ();
 
 	camera.Render();
+	animator.Update();
 	model.Render();
 }

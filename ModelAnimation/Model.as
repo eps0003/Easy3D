@@ -5,8 +5,8 @@ shared class Model
 
 	private Vec3f origin;
 	private Vec3f translation;
-	private Quaternion rotation;
 	private Vec3f scale = Vec3f(1);
+	private Quaternion rotation;
 
 	Model(string modelPath, string texture)
 	{
@@ -31,9 +31,19 @@ shared class Model
 		mesh.SetMaterial(material);
 	}
 
+	Vec3f getOrigin()
+	{
+		return origin;
+	}
+
 	void SetOrigin(Vec3f origin)
 	{
 		this.origin = origin;
+	}
+
+	Vec3f getTranslation()
+	{
+		return translation;
 	}
 
 	void SetTranslation(Vec3f translation)
@@ -41,14 +51,24 @@ shared class Model
 		this.translation = translation;
 	}
 
-	void SetRotation(Quaternion rotation)
+	Vec3f getScale()
 	{
-		this.rotation = rotation;
+		return scale;
 	}
 
 	void SetScale(Vec3f scale)
 	{
 		this.scale = scale;
+	}
+
+	Quaternion getRotation()
+	{
+		return rotation;
+	}
+
+	void SetRotation(Quaternion rotation)
+	{
+		this.rotation = rotation;
 	}
 
 	void SetTexture(string texture)
