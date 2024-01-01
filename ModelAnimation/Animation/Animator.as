@@ -39,7 +39,7 @@ shared class Animator
 
 	void Animate(IAnimation@ animation)
 	{
-		uint t = getGameTime();
+		float t = Interpolation::getGameTime();
 		float tAnim = t * 0.3f;
 
 		if (animation !is prevAnimation)

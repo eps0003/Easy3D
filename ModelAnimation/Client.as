@@ -20,7 +20,6 @@ Choreographer@ lowerChoreographer;
 
 void onInit(CRules@ this)
 {
-	GUI::SetFont("menu");
 	Render::addScript(Render::layer_prehud, "Client.as", "Render", 0);
 
 	@camera = Camera();
@@ -47,7 +46,7 @@ void onInit(CRules@ this)
 		.Append(CompositeModel(upperRightLeg).Append(CompositeModel(lowerRightLeg)));
 
 	// Arrange
-	body.SetTranslation(Vec3f(0, -0.375, 2.0f));
+	body.SetTranslation(Vec3f(0, -0.375 * 1.5f, 2.0f));
 	body.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
 	head.SetTranslation(Vec3f(0, 0.75f, 0));
 	upperLeftArm.SetTranslation(Vec3f(-0.25f, 0.75f, 0));
@@ -134,17 +133,6 @@ void onTick(CRules@ this)
 		lowerChoreographer.Transition("run");
 	}
 }
-
-// void onRender(CRules@ this)
-// {
-// 	uint w = getScreenWidth();
-// 	uint h = getScreenHeight();
-
-// 	GUI::DrawRectangle(Vec2f(0, h * 0.5f - 1), Vec2f(w, h * 0.5f + 1), color_white);
-// 	GUI::DrawRectangle(Vec2f(w * 0.5f - 1, 0), Vec2f(w * 0.5f + 1, h), color_white);
-
-// 	GUI::DrawText("Position: " + camera.getPosition().toString(), Vec2f(10, 10), color_white);
-// }
 
 void Render(int id)
 {

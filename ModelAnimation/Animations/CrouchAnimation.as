@@ -13,7 +13,7 @@ shared class BodyCrouchAnimation : DefaultAnimation
 		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
 		float percentageY = (mousePos.y / screenPos.y) - 0.5f;
 
-		return Quaternion().SetFromEulerDegrees(-100 * percentageY, 400 * percentageX, 0);
+		return Quaternion().SetFromEulerDegrees(0 /*-100 * percentageY*/, 400 * percentageX, 0);
 	}
 }
 

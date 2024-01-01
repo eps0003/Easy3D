@@ -13,7 +13,7 @@ shared class BodyRunAnimation : DefaultAnimation
 		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
 		float percentageY = (mousePos.y / screenPos.y) - 0.5f;
 
-		return Quaternion().SetFromEulerDegrees(-4.0f + Maths::Sin(t * 2.0f) - 100 * percentageY, 400 * percentageX, 0);
+		return Quaternion().SetFromEulerDegrees(-4.0f + Maths::Sin(t * 2.0f) /*- 100 * percentageY*/, 400 * percentageX, 0);
 	}
 }
 
