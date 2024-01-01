@@ -3,7 +3,7 @@ shared class Animator
 	private Model@ model;
 
 	private dictionary animations;
-	private string animationName;
+	private IAnimation@ animation;
 
 	private float transitionStartTime = 0.0f;
 	private float defaultTransitionDuration = 0.5f * getTicksASecond();
@@ -37,17 +37,23 @@ shared class Animator
 
 	void Transition(string name, float transitionDuration)
 	{
-		if (animationName == name) return;
+		IAnimation@ newAnimation;
+		animations.get(name, @newAnimation);
 
-		animationName = name;
+		// Always override transition duration even when transitioning to the same animation
+		// This is in case the transition duration is changed while transitioning
 		this.transitionDuration = transitionDuration;
-		transitionStartTime = getGameTime();
+
+		if (animation !is newAnimation)
+		{
+			@animation = newAnimation;
+			transitionStartTime = getGameTime();
+		}
 	}
 
 	void Animate()
 	{
-		IAnimation@ animation;
-		if (!animations.get(animationName, @animation)) return;
+		if (animation is null) return;
 
 		float t = getGameTime();
 

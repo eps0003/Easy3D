@@ -63,11 +63,6 @@ shared class Model
 		this.scale = scale;
 	}
 
-	CMatrix@ getMatrix()
-	{
-		return matrix;
-	}
-
 	Quaternion getRotation()
 	{
 		return rotation;
@@ -78,9 +73,19 @@ shared class Model
 		this.rotation = rotation;
 	}
 
+	string getTexture()
+	{
+		return texture;
+	}
+
 	void SetTexture(string texture)
 	{
 		SetMaterial(texture);
+	}
+
+	CMatrix@ getMatrix()
+	{
+		return matrix;
 	}
 
 	void Render(CMatrix matrix = CMatrix())
