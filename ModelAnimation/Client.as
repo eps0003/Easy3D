@@ -3,14 +3,24 @@
 #include "Model.as"
 #include "Animator.as"
 #include "IAnimation.as"
-#include "TestAnimation.as"
+#include "IdentityAnimation.as"
+#include "RunAnimation.as"
 #include "CompositeModel.as"
 
 #define CLIENT_ONLY
 
 Camera@ camera;
 CompositeModel@ model;
-Animator@ animator;
+Animator@ bodyAnimator;
+Animator@ headAnimator;
+Animator@ upperLeftArmAnimator;
+Animator@ lowerLeftArmAnimator;
+Animator@ upperRightArmAnimator;
+Animator@ lowerRightArmAnimator;
+Animator@ upperLeftLegAnimator;
+Animator@ lowerLeftLegAnimator;
+Animator@ upperRightLegAnimator;
+Animator@ lowerRightLegAnimator;
 
 void onInit(CRules@ this)
 {
@@ -41,8 +51,8 @@ void onInit(CRules@ this)
 		.Append(CompositeModel(upperRightLeg).Append(CompositeModel(lowerRightLeg)));
 
 	// Arrange
-	body.SetTranslation(Vec3f(0, 0.75f, 2.0f));
-	body.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
+	body.SetTranslation(Vec3f(0, -0.375, 2.0f));
+	body.SetRotation(Quaternion().SetFromEulerDegrees(0, 225, 0));
 	head.SetTranslation(Vec3f(0, 0.75f, 0));
 	upperLeftArm.SetTranslation(Vec3f(-0.25f, 0.75f, 0));
 	lowerLeftArm.SetTranslation(Vec3f(-0.125f, -0.375f, -0.125f));
@@ -52,21 +62,78 @@ void onInit(CRules@ this)
 	lowerRightLeg.SetTranslation(Vec3f(0.125f, -0.375f, 0.125f));
 
 	// Animate
-	@animator = Animator(body);
-	animator.Register("test1", TestAnimation1(body));
-	animator.Register("test2", TestAnimation2(body));
-	animator.Transition("test1");
+	@bodyAnimator = Animator(body);
+	@headAnimator = Animator(head);
+	@upperLeftArmAnimator = Animator(upperLeftArm);
+	@lowerLeftArmAnimator = Animator(lowerLeftArm);
+	@upperRightArmAnimator = Animator(upperRightArm);
+	@lowerRightArmAnimator = Animator(lowerRightArm);
+	@upperLeftLegAnimator = Animator(upperLeftLeg);
+	@lowerLeftLegAnimator = Animator(lowerLeftLeg);
+	@upperRightLegAnimator = Animator(upperRightLeg);
+	@lowerRightLegAnimator = Animator(lowerRightLeg);
+
+	bodyAnimator.Register("run", BodyRunAnimation());
+	headAnimator.Register("run", HeadRunAnimation());
+	upperLeftArmAnimator.Register("run", UpperLeftArmRunAnimation());
+	lowerLeftArmAnimator.Register("run", LowerLeftArmRunAnimation());
+	upperRightArmAnimator.Register("run", UpperRightArmRunAnimation());
+	lowerRightArmAnimator.Register("run", LowerRightArmRunAnimation());
+	upperLeftLegAnimator.Register("run", UpperLeftLegRunAnimation());
+	lowerLeftLegAnimator.Register("run", LowerLeftLegRunAnimation());
+	upperRightLegAnimator.Register("run", UpperRightLegRunAnimation());
+	lowerRightLegAnimator.Register("run", LowerRightLegRunAnimation());
+
+	bodyAnimator.Register("freeze", IdentityAnimation());
+	headAnimator.Register("freeze", IdentityAnimation());
+	upperLeftArmAnimator.Register("freeze", IdentityAnimation());
+	lowerLeftArmAnimator.Register("freeze", IdentityAnimation());
+	upperRightArmAnimator.Register("freeze", IdentityAnimation());
+	lowerRightArmAnimator.Register("freeze", IdentityAnimation());
+	upperLeftLegAnimator.Register("freeze", IdentityAnimation());
+	lowerLeftLegAnimator.Register("freeze", IdentityAnimation());
+	upperRightLegAnimator.Register("freeze", IdentityAnimation());
+	lowerRightLegAnimator.Register("freeze", IdentityAnimation());
+
+	bodyAnimator.Transition("run");
+	headAnimator.Transition("run");
+	upperLeftArmAnimator.Transition("run");
+	lowerLeftArmAnimator.Transition("run");
+	upperRightArmAnimator.Transition("run");
+	lowerRightArmAnimator.Transition("run");
+	upperLeftLegAnimator.Transition("run");
+	lowerLeftLegAnimator.Transition("run");
+	upperRightLegAnimator.Transition("run");
+	lowerRightLegAnimator.Transition("run");
 }
 
 void onTick(CRules@ this)
 {
 	if (getControls().isKeyPressed(KEY_SPACE))
 	{
-		animator.Transition("test2");
+		bodyAnimator.Transition("freeze");
+		headAnimator.Transition("freeze");
+		upperLeftArmAnimator.Transition("freeze");
+		lowerLeftArmAnimator.Transition("freeze");
+		upperRightArmAnimator.Transition("freeze");
+		lowerRightArmAnimator.Transition("freeze");
+		upperLeftLegAnimator.Transition("freeze");
+		lowerLeftLegAnimator.Transition("freeze");
+		upperRightLegAnimator.Transition("freeze");
+		lowerRightLegAnimator.Transition("freeze");
 	}
 	else
 	{
-		animator.Transition("test1", 0);
+		bodyAnimator.Transition("run");
+		headAnimator.Transition("run");
+		upperLeftArmAnimator.Transition("run");
+		lowerLeftArmAnimator.Transition("run");
+		upperRightArmAnimator.Transition("run");
+		lowerRightArmAnimator.Transition("run");
+		upperLeftLegAnimator.Transition("run");
+		lowerLeftLegAnimator.Transition("run");
+		upperRightLegAnimator.Transition("run");
+		lowerRightLegAnimator.Transition("run");
 	}
 }
 
@@ -89,6 +156,17 @@ void Render(int id)
 	Render::ClearZ();
 
 	camera.Render();
-	animator.Animate();
+
+	bodyAnimator.Animate();
+	headAnimator.Animate();
+	upperLeftArmAnimator.Animate();
+	lowerLeftArmAnimator.Animate();
+	upperRightArmAnimator.Animate();
+	lowerRightArmAnimator.Animate();
+	upperLeftLegAnimator.Animate();
+	lowerLeftLegAnimator.Animate();
+	upperRightLegAnimator.Animate();
+	lowerRightLegAnimator.Animate();
+
 	model.Render();
 }
