@@ -7,7 +7,13 @@ shared class BodyRunAnimation : DefaultAnimation
 
 	Quaternion@ getRotation(float t)
 	{
-		return Quaternion().SetFromEulerDegrees(-4.0f + Maths::Sin(t * 2.0f), 0, 0);
+		Vec2f mousePos = getControls().getInterpMouseScreenPos();
+		Vec2f screenPos = getDriver().getScreenDimensions();
+
+		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
+		float percentageY = (mousePos.y / screenPos.y) - 0.5f;
+
+		return Quaternion().SetFromEulerDegrees(-4.0f + Maths::Sin(t * 2.0f) - 100 * percentageY, 400 * percentageX, 0);
 	}
 }
 
