@@ -3,7 +3,9 @@ shared class Animator
 	private Model@ model;
 
 	private dictionary animations;
+
 	private IAnimation@ animation;
+	private IAnimation@ prevAnimation;
 
 	private Vec3f initialOrigin;
 	private Vec3f initialTranslation;
@@ -12,7 +14,7 @@ shared class Animator
 
 	private float transitionStartTime = 0.0f;
 	private float defaultTransitionDuration = 0.5f * getTicksASecond();
-	private float transitionDuration = 0.0f;
+	private float transitionDuration = defaultTransitionDuration;
 
 	Animator(Model@ model)
 	{
@@ -35,43 +37,16 @@ shared class Animator
 		initialRotation = model.getRotation();
 	}
 
-	Animator@ Register(string name, IAnimation@ animation)
+	void Animate(IAnimation@ animation)
 	{
-		if (name != "" && animation !is null)
-		{
-			animations.set(name, @animation);
-		}
-
-		return this;
-	}
-
-	void Transition(string name)
-	{
-		Transition(name, defaultTransitionDuration);
-	}
-
-	void Transition(string name, float transitionDuration)
-	{
-		IAnimation@ newAnimation;
-		animations.get(name, @newAnimation);
-
-		// Always override transition duration even when transitioning to the same animation
-		// This is in case the transition duration is changed while transitioning
-		this.transitionDuration = transitionDuration;
-
-		if (animation !is newAnimation)
-		{
-			@animation = newAnimation;
-			transitionStartTime = getGameTime();
-		}
-	}
-
-	void Animate()
-	{
-		if (animation is null) return;
-
 		uint t = getGameTime();
 		float tAnim = t * 0.3f;
+
+		if (animation !is prevAnimation)
+		{
+			transitionStartTime = t;
+			@prevAnimation = animation;
+		}
 
 		Vec3f currentOrigin = model.getOrigin();
 		Vec3f currentTranslation = model.getTranslation();

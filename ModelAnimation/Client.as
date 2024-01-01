@@ -2,8 +2,9 @@
 #include "Camera.as"
 #include "Model.as"
 #include "Animator.as"
+#include "Choreographer.as"
 #include "IAnimation.as"
-#include "IdentityAnimation.as"
+#include "DefaultAnimation.as"
 #include "RunAnimation.as"
 #include "CompositeModel.as"
 
@@ -11,16 +12,7 @@
 
 Camera@ camera;
 CompositeModel@ model;
-Animator@ bodyAnimator;
-Animator@ headAnimator;
-Animator@ upperLeftArmAnimator;
-Animator@ lowerLeftArmAnimator;
-Animator@ upperRightArmAnimator;
-Animator@ lowerRightArmAnimator;
-Animator@ upperLeftLegAnimator;
-Animator@ lowerLeftLegAnimator;
-Animator@ upperRightLegAnimator;
-Animator@ lowerRightLegAnimator;
+Choreographer@ choreographer;
 
 void onInit(CRules@ this)
 {
@@ -62,91 +54,66 @@ void onInit(CRules@ this)
 	lowerRightLeg.SetTranslation(Vec3f(0.125f, -0.375f, 0.125f));
 
 	// Animate
-	@bodyAnimator = Animator(body);
-	@headAnimator = Animator(head);
-	@upperLeftArmAnimator = Animator(upperLeftArm);
-	@lowerLeftArmAnimator = Animator(lowerLeftArm);
-	@upperRightArmAnimator = Animator(upperRightArm);
-	@lowerRightArmAnimator = Animator(lowerRightArm);
-	@upperLeftLegAnimator = Animator(upperLeftLeg);
-	@lowerLeftLegAnimator = Animator(lowerLeftLeg);
-	@upperRightLegAnimator = Animator(upperRightLeg);
-	@lowerRightLegAnimator = Animator(lowerRightLeg);
+	@choreographer = Choreographer();
 
-	bodyAnimator.Register("run", BodyRunAnimation());
-	headAnimator.Register("run", HeadRunAnimation());
-	upperLeftArmAnimator.Register("run", UpperLeftArmRunAnimation());
-	lowerLeftArmAnimator.Register("run", LowerLeftArmRunAnimation());
-	upperRightArmAnimator.Register("run", UpperRightArmRunAnimation());
-	lowerRightArmAnimator.Register("run", LowerRightArmRunAnimation());
-	upperLeftLegAnimator.Register("run", UpperLeftLegRunAnimation());
-	lowerLeftLegAnimator.Register("run", LowerLeftLegRunAnimation());
-	upperRightLegAnimator.Register("run", UpperRightLegRunAnimation());
-	lowerRightLegAnimator.Register("run", LowerRightLegRunAnimation());
+	Animator bodyAnimator(body);
+	Animator headAnimator(head);
+	Animator upperLeftArmAnimator(upperLeftArm);
+	Animator lowerLeftArmAnimator(lowerLeftArm);
+	Animator upperRightArmAnimator(upperRightArm);
+	Animator lowerRightArmAnimator(lowerRightArm);
+	Animator upperLeftLegAnimator(upperLeftLeg);
+	Animator lowerLeftLegAnimator(lowerLeftLeg);
+	Animator upperRightLegAnimator(upperRightLeg);
+	Animator lowerRightLegAnimator(lowerRightLeg);
 
-	bodyAnimator.Register("freeze", IdentityAnimation());
-	headAnimator.Register("freeze", IdentityAnimation());
-	upperLeftArmAnimator.Register("freeze", IdentityAnimation());
-	lowerLeftArmAnimator.Register("freeze", IdentityAnimation());
-	upperRightArmAnimator.Register("freeze", IdentityAnimation());
-	lowerRightArmAnimator.Register("freeze", IdentityAnimation());
-	upperLeftLegAnimator.Register("freeze", IdentityAnimation());
-	lowerLeftLegAnimator.Register("freeze", IdentityAnimation());
-	upperRightLegAnimator.Register("freeze", IdentityAnimation());
-	lowerRightLegAnimator.Register("freeze", IdentityAnimation());
+	choreographer.Register("run", bodyAnimator, BodyRunAnimation());
+	choreographer.Register("run", headAnimator, HeadRunAnimation());
+	choreographer.Register("run", upperLeftArmAnimator, UpperLeftArmRunAnimation());
+	choreographer.Register("run", lowerLeftArmAnimator, LowerLeftArmRunAnimation());
+	choreographer.Register("run", upperRightArmAnimator, UpperRightArmRunAnimation());
+	choreographer.Register("run", lowerRightArmAnimator, LowerRightArmRunAnimation());
+	choreographer.Register("run", upperLeftLegAnimator, UpperLeftLegRunAnimation());
+	choreographer.Register("run", lowerLeftLegAnimator, LowerLeftLegRunAnimation());
+	choreographer.Register("run", upperRightLegAnimator, UpperRightLegRunAnimation());
+	choreographer.Register("run", lowerRightLegAnimator, LowerRightLegRunAnimation());
 
-	bodyAnimator.Transition("run");
-	headAnimator.Transition("run");
-	upperLeftArmAnimator.Transition("run");
-	lowerLeftArmAnimator.Transition("run");
-	upperRightArmAnimator.Transition("run");
-	lowerRightArmAnimator.Transition("run");
-	upperLeftLegAnimator.Transition("run");
-	lowerLeftLegAnimator.Transition("run");
-	upperRightLegAnimator.Transition("run");
-	lowerRightLegAnimator.Transition("run");
+	choreographer.Register("freeze", bodyAnimator, DefaultAnimation());
+	choreographer.Register("freeze", headAnimator, DefaultAnimation());
+	choreographer.Register("freeze", upperLeftArmAnimator, DefaultAnimation());
+	choreographer.Register("freeze", lowerLeftArmAnimator, DefaultAnimation());
+	choreographer.Register("freeze", upperRightArmAnimator, DefaultAnimation());
+	choreographer.Register("freeze", lowerRightArmAnimator, DefaultAnimation());
+	choreographer.Register("freeze", upperLeftLegAnimator, DefaultAnimation());
+	choreographer.Register("freeze", lowerLeftLegAnimator, DefaultAnimation());
+	choreographer.Register("freeze", upperRightLegAnimator, DefaultAnimation());
+	choreographer.Register("freeze", lowerRightLegAnimator, DefaultAnimation());
+
+	choreographer.Transition("run");
 }
 
 void onTick(CRules@ this)
 {
 	if (getControls().isKeyPressed(KEY_SPACE))
 	{
-		bodyAnimator.Transition("freeze");
-		headAnimator.Transition("freeze");
-		upperLeftArmAnimator.Transition("freeze");
-		lowerLeftArmAnimator.Transition("freeze");
-		upperRightArmAnimator.Transition("freeze");
-		lowerRightArmAnimator.Transition("freeze");
-		upperLeftLegAnimator.Transition("freeze");
-		lowerLeftLegAnimator.Transition("freeze");
-		upperRightLegAnimator.Transition("freeze");
-		lowerRightLegAnimator.Transition("freeze");
+		choreographer.Transition("freeze");
 	}
 	else
 	{
-		bodyAnimator.Transition("run");
-		headAnimator.Transition("run");
-		upperLeftArmAnimator.Transition("run");
-		lowerLeftArmAnimator.Transition("run");
-		upperRightArmAnimator.Transition("run");
-		lowerRightArmAnimator.Transition("run");
-		upperLeftLegAnimator.Transition("run");
-		lowerLeftLegAnimator.Transition("run");
-		upperRightLegAnimator.Transition("run");
-		lowerRightLegAnimator.Transition("run");
+		choreographer.Transition("run");
 	}
 }
 
-void onRender(CRules@ this)
-{
-	uint w = getScreenWidth();
-	uint h = getScreenHeight();
+// void onRender(CRules@ this)
+// {
+// 	uint w = getScreenWidth();
+// 	uint h = getScreenHeight();
 
-	GUI::DrawRectangle(Vec2f(0, h * 0.5f - 1), Vec2f(w, h * 0.5f + 1), color_white);
-	GUI::DrawRectangle(Vec2f(w * 0.5f - 1, 0), Vec2f(w * 0.5f + 1, h), color_white);
+// 	GUI::DrawRectangle(Vec2f(0, h * 0.5f - 1), Vec2f(w, h * 0.5f + 1), color_white);
+// 	GUI::DrawRectangle(Vec2f(w * 0.5f - 1, 0), Vec2f(w * 0.5f + 1, h), color_white);
 
-	GUI::DrawText("Position: " + camera.getPosition().toString(), Vec2f(10, 10), color_white);
-}
+// 	GUI::DrawText("Position: " + camera.getPosition().toString(), Vec2f(10, 10), color_white);
+// }
 
 void Render(int id)
 {
@@ -156,17 +123,6 @@ void Render(int id)
 	Render::ClearZ();
 
 	camera.Render();
-
-	bodyAnimator.Animate();
-	headAnimator.Animate();
-	upperLeftArmAnimator.Animate();
-	lowerLeftArmAnimator.Animate();
-	upperRightArmAnimator.Animate();
-	lowerRightArmAnimator.Animate();
-	upperLeftLegAnimator.Animate();
-	lowerLeftLegAnimator.Animate();
-	upperRightLegAnimator.Animate();
-	lowerRightLegAnimator.Animate();
-
+	choreographer.Animate();
 	model.Render();
 }
