@@ -1,14 +1,14 @@
 shared class Wait : IdentityAnimation
 {
-	private float duration = 0.0f;
+	private float seconds = 0.0f;
 
-	Wait(float duration)
+	Wait(float seconds)
 	{
-		this.duration = Maths::Max(0, duration);
+		this.seconds = Maths::Max(0, seconds);
 	}
 
 	float getDuration()
 	{
-		return duration;
+		return seconds * getTicksASecond();
 	}
 }

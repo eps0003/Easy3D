@@ -15,14 +15,7 @@ shared class CompositeAnimation : IAnimation
 
 	float getDuration()
 	{
-		float totalDuration = 0.0f;
-
-		for (uint i = 0; i < animations.size(); i++)
-		{
-			totalDuration += animations[i].getDuration();
-		}
-
-		return totalDuration;
+		return getTotalDuration();
 	}
 
 	Vec3f@ getOrigin(float t)
@@ -59,7 +52,7 @@ shared class CompositeAnimation : IAnimation
 
 	private float getLocalTime(float t)
 	{
-		float totalDuration = getDuration();
+		float totalDuration = getTotalDuration();
 
 		for (uint i = 0; i < animations.size(); i++)
 		{
@@ -85,7 +78,7 @@ shared class CompositeAnimation : IAnimation
 			return null;
 		}
 
-		float totalDuration = getDuration();
+		float totalDuration = getTotalDuration();
 		if (totalDuration <= 0 || t >= 1)
 		{
 			return animations[animations.size() - 1];
@@ -106,5 +99,17 @@ shared class CompositeAnimation : IAnimation
 		}
 
 		return null;
+	}
+
+	private float getTotalDuration()
+	{
+		float totalDuration = 0.0f;
+
+		for (uint i = 0; i < animations.size(); i++)
+		{
+			totalDuration += animations[i].getDuration();
+		}
+
+		return totalDuration;
 	}
 }

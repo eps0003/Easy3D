@@ -12,9 +12,11 @@
 #include "GunAimAnimation.as"
 #include "CompositeModel.as"
 #include "CompositeAnimation.as"
+#include "Duration.as"
 #include "Loop.as"
 #include "Rate.as"
 #include "Wait.as"
+#include "Multi.as"
 
 #define CLIENT_ONLY
 
@@ -67,7 +69,7 @@ void onInit(CRules@ this)
 
 	IAnimation@ anim = CompositeAnimation()
 		.Add(Loop(BodyRunAnimation(), 1))
-		.Add(Wait(0.5f))
+		.Add(Wait(2.0f))
 		.Add(Rate(BodyRunAnimation(), -2.0f));
 
 	Animator bodyAnimator(body);
@@ -151,7 +153,7 @@ void Render(int id)
 	Render::SetBackfaceCull(false);
 	Render::ClearZ();
 
-	float t = getControls().getInterpMouseScreenPos().y / getScreenHeight();
+	float t = Interpolation::getGameTime();
 
 	camera.Render();
 	upperChoreographer.Animate(t);

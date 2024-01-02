@@ -2,7 +2,7 @@ shared class BodyRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Vec3f@ getTranslation(float t)
@@ -29,7 +29,7 @@ shared class HeadRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -43,7 +43,7 @@ shared class UpperLeftArmRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -57,7 +57,7 @@ shared class LowerLeftArmRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -71,7 +71,7 @@ shared class UpperRightArmRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -85,7 +85,7 @@ shared class LowerRightArmRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -99,7 +99,7 @@ shared class UpperLeftLegRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -113,7 +113,7 @@ shared class LowerLeftLegRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -127,7 +127,7 @@ shared class UpperRightLegRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
@@ -141,7 +141,7 @@ shared class LowerRightLegRunAnimation : DefaultAnimation
 {
 	float getDuration()
 	{
-		return 1.0f;
+		return 0.8f * getTicksASecond();
 	}
 
 	Quaternion@ getRotation(float t)
