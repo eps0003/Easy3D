@@ -29,7 +29,7 @@ shared class Choreographer
 		animators.get(name, @currentAnimators);
 	}
 
-	void Animate()
+	void Animate(float t)
 	{
 		if (currentAnimations is null || currentAnimators is null) return;
 
@@ -38,7 +38,7 @@ shared class Choreographer
 			IAnimation@ animation = currentAnimations[i];
 			Animator@ animator = currentAnimators[i];
 
-			animator.Animate(animation);
+			animator.Animate(animation, t);
 		}
 	}
 }

@@ -5,11 +5,16 @@
 #include "Choreographer.as"
 #include "IAnimation.as"
 #include "DefaultAnimation.as"
+#include "IdentityAnimation.as"
 #include "RunAnimation.as"
 #include "CrouchAnimation.as"
 #include "GunHoldAnimation.as"
 #include "GunAimAnimation.as"
 #include "CompositeModel.as"
+#include "CompositeAnimation.as"
+#include "Loop.as"
+#include "Rate.as"
+#include "Wait.as"
 
 #define CLIENT_ONLY
 
@@ -60,6 +65,11 @@ void onInit(CRules@ this)
 	@upperChoreographer = Choreographer();
 	@lowerChoreographer = Choreographer();
 
+	IAnimation@ anim = CompositeAnimation()
+		.Add(Loop(BodyRunAnimation(), 1))
+		.Add(Wait(0.5f))
+		.Add(Rate(BodyRunAnimation(), -2.0f));
+
 	Animator bodyAnimator(body);
 	Animator headAnimator(head);
 	Animator upperLeftArmAnimator(upperLeftArm);
@@ -82,7 +92,7 @@ void onInit(CRules@ this)
 	lowerChoreographer.Register("default", upperRightLegAnimator, DefaultAnimation());
 	lowerChoreographer.Register("default", lowerRightLegAnimator, DefaultAnimation());
 
-	lowerChoreographer.Register("run", bodyAnimator, BodyRunAnimation());
+	lowerChoreographer.Register("run", bodyAnimator, anim);
 	upperChoreographer.Register("run", headAnimator, HeadRunAnimation());
 	upperChoreographer.Register("run", upperLeftArmAnimator, UpperLeftArmRunAnimation());
 	upperChoreographer.Register("run", lowerLeftArmAnimator, LowerLeftArmRunAnimation());
@@ -141,8 +151,10 @@ void Render(int id)
 	Render::SetBackfaceCull(false);
 	Render::ClearZ();
 
+	float t = getControls().getInterpMouseScreenPos().y / getScreenHeight();
+
 	camera.Render();
-	upperChoreographer.Animate();
-	lowerChoreographer.Animate();
+	upperChoreographer.Animate(t);
+	lowerChoreographer.Animate(t);
 	model.Render();
 }

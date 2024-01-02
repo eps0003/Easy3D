@@ -1,5 +1,10 @@
 shared class DefaultAnimation : IAnimation
 {
+	float getDuration()
+	{
+		return 0.0f;
+	}
+
 	Vec3f@ getOrigin(float t)
 	{
 		return Vec3f();

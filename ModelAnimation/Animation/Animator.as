@@ -37,14 +37,13 @@ shared class Animator
 		initialRotation = model.getRotation();
 	}
 
-	void Animate(IAnimation@ animation)
+	void Animate(IAnimation@ animation, float t)
 	{
-		float t = Interpolation::getGameTime();
-		float tAnim = t * 0.3f;
+		float tReal = Interpolation::getGameTime();
 
 		if (animation !is prevAnimation)
 		{
-			transitionStartTime = t;
+			transitionStartTime = tReal;
 			@prevAnimation = animation;
 		}
 
@@ -53,19 +52,19 @@ shared class Animator
 		Vec3f currentScale = model.getScale();
 		Quaternion currentRotation = model.getRotation();
 
-		Vec3f@ animOrigin = animation.getOrigin(tAnim);
-		Vec3f@ animTranslation = animation.getTranslation(tAnim);
-		Vec3f@ animScale = animation.getScale(tAnim);
-		Quaternion@ animRotation = animation.getRotation(tAnim);
+		Vec3f@ animOrigin = animation.getOrigin(t);
+		Vec3f@ animTranslation = animation.getTranslation(t);
+		Vec3f@ animScale = animation.getScale(t);
+		Quaternion@ animRotation = animation.getRotation(t);
 
 		Vec3f desiredOrigin = animOrigin is null ? currentOrigin : (initialOrigin + animOrigin);
 		Vec3f desiredTranslation = animTranslation is null ? currentTranslation : (initialTranslation + animTranslation);
 		Vec3f desiredScale = animScale is null ? currentScale : (initialScale * animScale);
 		Quaternion desiredRotation = animRotation is null ? currentRotation : (initialRotation * animRotation);
 
-		if (transitionStartTime > 0.0f && transitionDuration > 0.0f && t - transitionStartTime < transitionDuration)
+		if (transitionStartTime > 0.0f && transitionDuration > 0.0f && tReal - transitionStartTime < transitionDuration)
 		{
-			float tLerp = Maths::Pow((t - transitionStartTime) / transitionDuration, 1.5f);
+			float tLerp = Maths::Pow((tReal - transitionStartTime) / transitionDuration, 1.5f);
 
 			model.SetOrigin(currentOrigin.lerp(desiredOrigin, tLerp));
 			model.SetTranslation(currentTranslation.lerp(desiredTranslation, tLerp));
