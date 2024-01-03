@@ -2,6 +2,9 @@ shared class CompositeAnimation : IAnimation
 {
 	private IAnimation@[] animations;
 
+	private Easing@ transitionEasing;
+	private float transitionSeconds;
+
 	CompositeAnimation(IAnimation@[] animations)
 	{
 		this.animations = animations;
@@ -9,7 +12,29 @@ shared class CompositeAnimation : IAnimation
 
 	CompositeAnimation@ Add(IAnimation@ animation)
 	{
+		if (transitionEasing !is null)
+		{
+			if (animations.size() > 0)
+			{
+				animations.push_back(Lerp(
+					animations[animations.size() - 1],
+					animation,
+					transitionEasing,
+					transitionSeconds
+				));
+			}
+
+			@transitionEasing = null;
+		}
+
 		animations.push_back(animation);
+		return this;
+	}
+
+	CompositeAnimation@ Transition(Easing@ easing, float seconds)
+	{
+		@transitionEasing = easing;
+		transitionSeconds = seconds;
 		return this;
 	}
 
