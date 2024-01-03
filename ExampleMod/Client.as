@@ -13,7 +13,7 @@ Choreographer@ lowerChoreographer;
 
 void onInit(CRules@ this)
 {
-	Render::addScript(Render::layer_prehud, "Client.as", "Render", 0);
+	Render::addScript(Render::layer_prehud, getCurrentScriptName(), "Render", 0);
 
 	@camera = Camera();
 

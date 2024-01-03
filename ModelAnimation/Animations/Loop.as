@@ -1,7 +1,7 @@
 shared class Loop : IAnimation
 {
 	private IAnimation@ animation;
-	private uint count = 0.0f;
+	private uint count = 0;
 
 	Loop(IAnimation@ animation, uint count)
 	{
