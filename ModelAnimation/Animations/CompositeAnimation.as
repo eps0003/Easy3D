@@ -15,44 +15,27 @@ shared class CompositeAnimation : IAnimation
 
 	float getDuration()
 	{
-		return getTotalDuration();
+		float totalDuration = 0.0f;
+
+		for (uint i = 0; i < animations.size(); i++)
+		{
+			totalDuration += animations[i].getDuration();
+		}
+
+		return totalDuration;
 	}
 
-	Vec3f@ getOrigin(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		IAnimation@ animation = getLocalAnimation(t);
-		return animation !is null
-			? animation.getOrigin(getLocalTime(t))
-			: Vec3f();
-	}
+		if (animation is null) return;
 
-	Vec3f@ getTranslation(float t)
-	{
-		IAnimation@ animation = getLocalAnimation(t);
-		return animation !is null
-			? animation.getTranslation(getLocalTime(t))
-			: Vec3f();
-	}
-
-	Vec3f@ getScale(float t)
-	{
-		IAnimation@ animation = getLocalAnimation(t);
-		return animation !is null
-			? animation.getScale(getLocalTime(t))
-			: Vec3f(1);
-	}
-
-	Quaternion@ getRotation(float t)
-	{
-		IAnimation@ animation = getLocalAnimation(t);
-		return animation !is null
-			? animation.getRotation(getLocalTime(t))
-			: Quaternion();
+		animation.Animate(getLocalTime(t), origin, translation, scale, rotation);
 	}
 
 	private float getLocalTime(float t)
 	{
-		float totalDuration = getTotalDuration();
+		float totalDuration = getDuration();
 
 		for (uint i = 0; i < animations.size(); i++)
 		{
@@ -78,7 +61,7 @@ shared class CompositeAnimation : IAnimation
 			return null;
 		}
 
-		float totalDuration = getTotalDuration();
+		float totalDuration = getDuration();
 		if (totalDuration <= 0 || t >= 1)
 		{
 			return animations[animations.size() - 1];
@@ -99,17 +82,5 @@ shared class CompositeAnimation : IAnimation
 		}
 
 		return null;
-	}
-
-	private float getTotalDuration()
-	{
-		float totalDuration = 0.0f;
-
-		for (uint i = 0; i < animations.size(); i++)
-		{
-			totalDuration += animations[i].getDuration();
-		}
-
-		return totalDuration;
 	}
 }

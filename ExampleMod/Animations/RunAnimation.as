@@ -1,17 +1,11 @@
-shared class BodyRunAnimation : DefaultAnimation
+shared class BodyRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Vec3f@ getTranslation(float t)
-	{
-		float t2 = t * Maths::Pi * 2.0f;
-		return Vec3f(0, Maths::Abs(Maths::Cos(t2) * 0.1f), 0);
-	}
-
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
 
@@ -21,132 +15,133 @@ shared class BodyRunAnimation : DefaultAnimation
 		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
 		float percentageY = (mousePos.y / screenPos.y) - 0.5f;
 
-		return Quaternion().SetFromEulerDegrees(-4.0f + Maths::Sin(t2 * 2.0f) /*- 100 * percentageY*/, 400 * percentageX, 0);
+		origin = Vec3f(0, Maths::Abs(Maths::Cos(t2) * 0.1f), 0);
+		rotation = Quaternion().SetFromEulerDegrees(-4.0f + Maths::Sin(t2 * 2.0f) /*- 100 * percentageY*/, 400 * percentageX, 0);
 	}
 }
 
-shared class HeadRunAnimation : DefaultAnimation
+shared class HeadRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Sin(t2 * 2.0f), 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Sin(t2 * 2.0f), 0, 0);
 	}
 }
 
-shared class UpperLeftArmRunAnimation : DefaultAnimation
+shared class UpperLeftArmRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * -40.0f, 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * -40.0f, 0, 0);
 	}
 }
 
-shared class LowerLeftArmRunAnimation : DefaultAnimation
+shared class LowerLeftArmRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Max(0, Maths::Cos(t2) * -40.0f), 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Max(0, Maths::Cos(t2) * -40.0f), 0, 0);
 	}
 }
 
-shared class UpperRightArmRunAnimation : DefaultAnimation
+shared class UpperRightArmRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * 40.0f, 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * 40.0f, 0, 0);
 	}
 }
 
-shared class LowerRightArmRunAnimation : DefaultAnimation
+shared class LowerRightArmRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Max(0, Maths::Cos(t2) * 40.0f), 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Max(0, Maths::Cos(t2) * 40.0f), 0, 0);
 	}
 }
 
-shared class UpperLeftLegRunAnimation : DefaultAnimation
+shared class UpperLeftLegRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * 40.0f, 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * 40.0f, 0, 0);
 	}
 }
 
-shared class LowerLeftLegRunAnimation : DefaultAnimation
+shared class LowerLeftLegRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Min(0, Maths::Sin(t2) * 40.0f), 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Min(0, Maths::Sin(t2) * 40.0f), 0, 0);
 	}
 }
 
-shared class UpperRightLegRunAnimation : DefaultAnimation
+shared class UpperRightLegRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * -40.0f, 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Cos(t2) * -40.0f, 0, 0);
 	}
 }
 
-shared class LowerRightLegRunAnimation : DefaultAnimation
+shared class LowerRightLegRunAnimation : IAnimation
 {
 	float getDuration()
 	{
 		return 0.8f * getTicksASecond();
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		float t2 = t * Maths::Pi * 2.0f;
-		return Quaternion().SetFromEulerDegrees(Maths::Min(0, -Maths::Sin(t2) * 40.0f), 0, 0);
+		rotation = Quaternion().SetFromEulerDegrees(Maths::Min(0, -Maths::Sin(t2) * 40.0f), 0, 0);
 	}
 }

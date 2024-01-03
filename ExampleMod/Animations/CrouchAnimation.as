@@ -1,11 +1,11 @@
-shared class BodyCrouchAnimation : DefaultAnimation
+shared class BodyCrouchAnimation : IAnimation
 {
-	Vec3f@ getTranslation(float t)
+	float getDuration()
 	{
-		return Vec3f(0, -0.375, 0);
+		return 0.0f;
 	}
 
-	Quaternion@ getRotation(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
 		Vec2f mousePos = getControls().getInterpMouseScreenPos();
 		Vec2f screenPos = getDriver().getScreenDimensions();
@@ -13,38 +13,59 @@ shared class BodyCrouchAnimation : DefaultAnimation
 		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
 		float percentageY = (mousePos.y / screenPos.y) - 0.5f;
 
-		return Quaternion().SetFromEulerDegrees(0 /*-100 * percentageY*/, 400 * percentageX, 0);
+		translation = Vec3f(0, -0.375, 0);
+		rotation = Quaternion().SetFromEulerDegrees(0 /*-100 * percentageY*/, 400 * percentageX, 0);
 	}
 }
 
-shared class UpperLeftLegCrouchAnimation : DefaultAnimation
+shared class UpperLeftLegCrouchAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(-10, 0, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(-10, 0, 0);
 	}
 }
 
-shared class LowerLeftLegCrouchAnimation : DefaultAnimation
+shared class LowerLeftLegCrouchAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(-80, 0, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(-80, 0, 0);
 	}
 }
 
-shared class UpperRightLegCrouchAnimation : DefaultAnimation
+shared class UpperRightLegCrouchAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(70, 0, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(70, 0, 0);
 	}
 }
 
-shared class LowerRightLegCrouchAnimation : DefaultAnimation
+shared class LowerRightLegCrouchAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(-70, 0, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(-70, 0, 0);
 	}
 }

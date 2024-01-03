@@ -14,23 +14,8 @@ shared class Duration : IAnimation
 		return duration;
 	}
 
-	Vec3f@ getOrigin(float t)
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
-		return animation.getOrigin(t);
-	}
-
-	Vec3f@ getTranslation(float t)
-	{
-		return animation.getTranslation(t);
-	}
-
-	Vec3f@ getScale(float t)
-	{
-		return animation.getScale(t);
-	}
-
-	Quaternion@ getRotation(float t)
-	{
-		return animation.getRotation(t);
+		animation.Animate(t, origin, translation, scale, rotation);
 	}
 }

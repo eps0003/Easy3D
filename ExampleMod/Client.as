@@ -55,7 +55,7 @@ void onInit(CRules@ this)
 
 	IAnimation@ anim = CompositeAnimation()
 		.Add(Loop(BodyRunAnimation(), 1))
-		.Add(Wait(2.0f))
+		.Add(Pause(BodyRunAnimation(), 1.0f, 2.0f))
 		.Add(Rate(BodyRunAnimation(), -2.0f));
 
 	Animator bodyAnimator(body);
@@ -68,17 +68,6 @@ void onInit(CRules@ this)
 	Animator lowerLeftLegAnimator(lowerLeftLeg);
 	Animator upperRightLegAnimator(upperRightLeg);
 	Animator lowerRightLegAnimator(lowerRightLeg);
-
-	lowerChoreographer.Register("default", bodyAnimator, DefaultAnimation());
-	upperChoreographer.Register("default", headAnimator, DefaultAnimation());
-	upperChoreographer.Register("default", upperLeftArmAnimator, DefaultAnimation());
-	upperChoreographer.Register("default", lowerLeftArmAnimator, DefaultAnimation());
-	upperChoreographer.Register("default", upperRightArmAnimator, DefaultAnimation());
-	upperChoreographer.Register("default", lowerRightArmAnimator, DefaultAnimation());
-	lowerChoreographer.Register("default", upperLeftLegAnimator, DefaultAnimation());
-	lowerChoreographer.Register("default", lowerLeftLegAnimator, DefaultAnimation());
-	lowerChoreographer.Register("default", upperRightLegAnimator, DefaultAnimation());
-	lowerChoreographer.Register("default", lowerRightLegAnimator, DefaultAnimation());
 
 	lowerChoreographer.Register("run", bodyAnimator, anim);
 	upperChoreographer.Register("run", headAnimator, HeadRunAnimation());

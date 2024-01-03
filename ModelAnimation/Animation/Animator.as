@@ -45,6 +45,8 @@ shared class Animator
 			@prevAnimation = animation;
 		}
 
+		if (animation is null) return;
+
 		float duration = animation.getDuration();
 		float tAnim = duration > 0.0f
 			? ((t - transitionStartTime) / duration) % 1.0f
@@ -55,15 +57,17 @@ shared class Animator
 		Vec3f currentScale = model.getScale();
 		Quaternion currentRotation = model.getRotation();
 
-		Vec3f@ animOrigin = animation.getOrigin(tAnim);
-		Vec3f@ animTranslation = animation.getTranslation(tAnim);
-		Vec3f@ animScale = animation.getScale(tAnim);
-		Quaternion@ animRotation = animation.getRotation(tAnim);
+		Vec3f animOrigin;
+		Vec3f animTranslation;
+		Vec3f animScale(1);
+		Quaternion animRotation;
 
-		Vec3f desiredOrigin = animOrigin is null ? currentOrigin : (initialOrigin + animOrigin);
-		Vec3f desiredTranslation = animTranslation is null ? currentTranslation : (initialTranslation + animTranslation);
-		Vec3f desiredScale = animScale is null ? currentScale : (initialScale * animScale);
-		Quaternion desiredRotation = animRotation is null ? currentRotation : (initialRotation * animRotation);
+		animation.Animate(tAnim, animOrigin, animTranslation, animScale, animRotation);
+
+		Vec3f desiredOrigin = initialOrigin + animOrigin;
+		Vec3f desiredTranslation = initialTranslation + animTranslation;
+		Vec3f desiredScale = initialScale * animScale;
+		Quaternion desiredRotation = initialRotation * animRotation;
 
 		if (transitionStartTime > 0.0f && transitionDuration > 0.0f && t - transitionStartTime < transitionDuration)
 		{

@@ -1,31 +1,51 @@
-shared class UpperRightArmGunHoldAnimation : DefaultAnimation
+shared class UpperRightArmGunHoldAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(20, 45, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(20, 45, 0);
 	}
 }
 
-shared class LowerRightArmGunHoldAnimation : DefaultAnimation
+shared class LowerRightArmGunHoldAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(35, 0, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(35, 0, 0);
 	}
 }
 
-shared class UpperLeftArmGunHoldAnimation : DefaultAnimation
+shared class UpperLeftArmGunHoldAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(15, -10, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(15, -10, 0);
 	}
 }
 
-shared class LowerLeftArmGunHoldAnimation : DefaultAnimation
+shared class LowerLeftArmGunHoldAnimation : IAnimation
 {
-	Quaternion@ getRotation(float t)
+	float getDuration()
 	{
-		return Quaternion().SetFromEulerDegrees(20, 0, 0);
+		return 0.0f;
+	}
+
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
+	{
+		rotation = Quaternion().SetFromEulerDegrees(20, 0, 0);
 	}
 }

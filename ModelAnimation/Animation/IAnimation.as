@@ -1,8 +1,5 @@
 shared interface IAnimation
 {
 	float getDuration();
-	Vec3f@ getOrigin(float t);
-	Vec3f@ getTranslation(float t);
-	Vec3f@ getScale(float t);
-	Quaternion@ getRotation(float t);
+	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation);
 }
