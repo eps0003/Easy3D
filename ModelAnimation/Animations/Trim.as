@@ -13,7 +13,7 @@ shared class Trim : IAnimation
 
 	float getDuration()
 	{
-		return animation.getDuration() * (end - start);
+		return Maths::Abs(animation.getDuration() * (end - start));
 	}
 
 	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)

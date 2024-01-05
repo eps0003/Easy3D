@@ -58,33 +58,18 @@ void onInit(CRules@ this)
 	@upperChoreographer = Choreographer();
 	@lowerChoreographer = Choreographer();
 
-	float transition = 0.15f;
-	float offset = -0.00f;
-
-	IAnimation@ upperLeftArmAnim = Offset(Duration(CompositeAnimation()
-		.Add(Repeat(DanceUpperArmAnimation(), 2))
-		.Add(Lerp(DanceUpperArmAnimation(), DanceUpperArmAnimation2(), EaseInOut(), transition))
-		.Add(Repeat(DanceUpperArmAnimation2(), 2))
-		.Add(Lerp(DanceUpperArmAnimation2(), DanceUpperArmAnimation(), EaseInOut(), transition)),
-		DanceBodyAnimation().getDuration() * 4), offset);
-	IAnimation@ upperRightArmAnim = Offset(Duration(CompositeAnimation()
-		.Add(Repeat(Offset(DanceUpperArmAnimation(), 0.5f), 2))
-		.Add(Lerp(Offset(DanceUpperArmAnimation(), 0.5f), Offset(DanceUpperArmAnimation2(), 0.5f), EaseInOut(), transition))
-		.Add(Repeat(Offset(DanceUpperArmAnimation2(), 0.5f), 2))
-		.Add(Lerp(Offset(DanceUpperArmAnimation2(), 0.5f), Offset(DanceUpperArmAnimation(), 0.5f), EaseInOut(), transition)),
-		DanceBodyAnimation().getDuration() * 4), offset);
-	IAnimation@ lowerLeftArmAnim = Offset(Duration(CompositeAnimation()
-		.Add(Repeat(DanceLowerArmAnimation(), 2))
-		.Add(Lerp(DanceLowerArmAnimation(), DanceLowerArmAnimation2(), EaseInOut(), transition))
-		.Add(Repeat(DanceLowerArmAnimation2(), 2))
-		.Add(Lerp(DanceLowerArmAnimation2(), DanceLowerArmAnimation(), EaseInOut(), transition)),
-		DanceBodyAnimation().getDuration() * 4), offset);
-	IAnimation@ lowerRightArmAnim = Offset(Duration(CompositeAnimation()
-		.Add(Repeat(Offset(DanceLowerArmAnimation(), 0.5f), 2))
-		.Add(Lerp(Offset(DanceLowerArmAnimation(), 0.5f), Offset(DanceLowerArmAnimation2(), 0.5f), EaseInOut(), transition))
-		.Add(Repeat(Offset(DanceLowerArmAnimation2(), 0.5f), 2))
-		.Add(Lerp(Offset(DanceLowerArmAnimation2(), 0.5f), Offset(DanceLowerArmAnimation(), 0.5f), EaseInOut(), transition)),
-		DanceBodyAnimation().getDuration() * 4), offset);
+	IAnimation@ upperLeftArmAnim = CompositeAnimation()
+		.Add(Lerp(DanceUpperArmAnimation2(), Repeat(DanceUpperArmAnimation(), 2), 0.125f))
+		.Add(Lerp(DanceUpperArmAnimation(), Repeat(DanceUpperArmAnimation2(), 2), 0.125f));
+	IAnimation@ upperRightArmAnim = CompositeAnimation()
+		.Add(Lerp(Offset(DanceUpperArmAnimation2(), 0.5f), Repeat(Offset(DanceUpperArmAnimation(), 0.5f), 2), 0.125f))
+		.Add(Lerp(Offset(DanceUpperArmAnimation(), 0.5f), Repeat(Offset(DanceUpperArmAnimation2(), 0.5f), 2), 0.125f));
+	IAnimation@ lowerLeftArmAnim = CompositeAnimation()
+		.Add(Lerp(DanceLowerArmAnimation2(), Repeat(DanceLowerArmAnimation(), 2), 0.125f))
+		.Add(Lerp(DanceLowerArmAnimation(), Repeat(DanceLowerArmAnimation2(), 2), 0.125f));
+	IAnimation@ lowerRightArmAnim = CompositeAnimation()
+		.Add(Lerp(Offset(DanceLowerArmAnimation2(), 0.5f), Repeat(Offset(DanceLowerArmAnimation(), 0.5f), 2), 0.125f))
+		.Add(Lerp(Offset(DanceLowerArmAnimation(), 0.5f), Repeat(Offset(DanceLowerArmAnimation2(), 0.5f), 2), 0.125f));
 
 	Animator bodyAnimator(body);
 	Animator headAnimator(head);
