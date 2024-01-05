@@ -1,4 +1,4 @@
-#include "ModelAnimation.as"
+#include "Easy3D.as"
 #include "CrouchAnimation.as"
 #include "GunAimAnimation.as"
 #include "GunHoldAnimation.as"

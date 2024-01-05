@@ -1,4 +1,4 @@
-#include "ModelAnimation.as"
+#include "Easy3D.as"
 
 #define CLIENT_ONLY
 
