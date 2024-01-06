@@ -2,7 +2,7 @@ shared class Trim : IAnimation
 {
 	private IAnimation@ animation;
 	private float start = 0.0f;
-	private float end = 0.0f;
+	private float end = 1.0f;
 
 	Trim(IAnimation@ animation, float start, float end)
 	{

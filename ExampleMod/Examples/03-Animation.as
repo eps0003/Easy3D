@@ -33,7 +33,7 @@ void Render(int id)
 	Render::SetBackfaceCull(false);
 	Render::ClearZ();
 
-	float t = Interpolation::getGameTime();
+	float t = getInterpolatedGameTime();
 
 	camera.Render();
 	animator.Animate(animation, t);

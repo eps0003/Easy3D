@@ -9,27 +9,33 @@ namespace Maths
 		return 0;
 	}
 
-	shared float Clamp2(float value, float low, float high)
+	shared float ClampSmart(float value, float bound1, float bound2)
 	{
-		if (low > high)
+		float low, high;
+
+		if (low < high)
 		{
-			float temp = low;
-			low = high;
-			high = temp;
+			low = bound1;
+			high = bound2;
+		}
+		else
+		{
+			low = bound2;
+			high = bound1;
 		}
 
 		return Maths::Clamp(value, low, high);
 	}
 
-	shared float AngleDifference(float a1, float a2)
+	shared float AngleDifference(float angle1, float angle2)
 	{
-		float diff = (a2 - a1 + 180) % 360 - 180;
+		float diff = (angle2 - angle1 + 180) % 360 - 180;
 		return diff < -180 ? diff + 360 : diff;
 	}
 
-	shared float LerpAngle(float a1, float a2, float t)
+	shared float LerpAngle(float angle1, float angle2, float t)
 	{
-		return a1 + AngleDifference(a1, a2) * t;
+		return angle1 + AngleDifference(angle1, angle2) * t;
 	}
 
 	shared float toRadians(float degrees)

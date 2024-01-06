@@ -15,12 +15,12 @@ shared float easeInOut(float t, float power = 2.0f)
 		: 1 - Maths::Pow(-2 * t + 2, power) / 2;
 }
 
-shared interface Easing
+shared interface IEasing
 {
 	float ease(float t);
 }
 
-shared class EaseLinear : Easing
+shared class EaseLinear : IEasing
 {
 	float ease(float t)
 	{
@@ -28,7 +28,7 @@ shared class EaseLinear : Easing
 	}
 }
 
-shared class EaseIn : Easing
+shared class EaseIn : IEasing
 {
 	private float power = 2.0f;
 
@@ -43,7 +43,7 @@ shared class EaseIn : Easing
 	}
 }
 
-shared class EaseOut : Easing
+shared class EaseOut : IEasing
 {
 	private float power = 2.0f;
 
@@ -58,7 +58,7 @@ shared class EaseOut : Easing
 	}
 }
 
-shared class EaseInOut : Easing
+shared class EaseInOut : IEasing
 {
 	private float power = 2.0f;
 

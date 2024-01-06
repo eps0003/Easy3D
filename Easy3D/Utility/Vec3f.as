@@ -314,9 +314,9 @@ shared class Vec3f
 	Vec3f clamp(const Vec3f &in low, const Vec3f &in high)
 	{
 		return Vec3f(
-			Maths::Clamp2(x, low.x, high.x),
-			Maths::Clamp2(y, low.y, high.y),
-			Maths::Clamp2(z, low.z, high.z)
+			Maths::ClampSmart(x, low.x, high.x),
+			Maths::ClampSmart(y, low.y, high.y),
+			Maths::ClampSmart(z, low.z, high.z)
 		);
 	}
 

@@ -1,4 +1,4 @@
-#include "Utilities.as"
+#include "Utility.as"
 
 #define CLIENT_ONLY
 
@@ -16,9 +16,7 @@ void onRestart(CRules@ this)
 
 void onTick(CRules@ this)
 {
-	this.set_f32("inter_frame_time", 0.0f);
 	this.set_f32("inter_game_time", getGameTime());
-
 	this.set_u32("fps", Maths::Round(calculateFPS(fpsSamples)));
 }
 
@@ -29,7 +27,6 @@ void onRender(CRules@ this)
 	float correction = getRenderExactDeltaTime() * getTicksASecond();
 	if (correction <= 0.0f) return;
 
-	this.add_f32("inter_frame_time", correction);
 	this.add_f32("inter_game_time", correction);
 
 	fpsSamples.push_back(getTicksASecond() / correction);
