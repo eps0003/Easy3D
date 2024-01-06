@@ -55,7 +55,8 @@ A [King Arthur's Gold](https://kag2d.com/) mod that provides the tools to more e
   - [Reverse](#reverse)
   - [Trim](#trim)
 - [Frequently Asked Questions](#frequently-asked-questions)
-  - [Why use `shared`?](#why-use-shared)
+  - [Why use the 'shared' keyword?](#why-use-the-shared-keyword)
+  - [What are Husks?](#what-are-husks)
 
 ## Usage
 
@@ -213,8 +214,6 @@ Sinusoidal, exponential, and circular easing functions have not been implemented
 
 > **Learn more:** https://easings.net/
 
----
-
 ### easeIn(float t, float power)
 
 Start slow and end fast.
@@ -232,8 +231,6 @@ Start fast and end slow.
 Start and end slow, increasing in speed at the middle.
 
 <sup>[Source](/Easy3D/Utility/Easing.as) · [↑](#table-of-contents)</sup>
-
----
 
 ### IEasing
 
@@ -447,7 +444,7 @@ Trim(animation, 3.0f, 0.5f);
 
 ## Frequently Asked Questions
 
-### Why use `shared`?
+### Why use the 'shared' keyword?
 
 The [`shared`](https://www.angelcode.com/angelscript/sdk/docs/manual/doc_script_shared.html) keyword is used to avoid an issue when attempting to use [`cast<>()`](https://www.angelcode.com/angelscript/sdk/docs/manual/doc_expressions.html#conversion) to convert the type of class handles. This issue is inevitably encountered when developing [total conversion](https://en.wikipedia.org/wiki/Video_game_modding#Total_conversion) mods that have systems that handle various classes that inherit/implement a shared parent class/interface.
 
@@ -459,3 +456,13 @@ Using the `shared` keyword for classes and interfaces prevents this issue from o
 - [Function handles](https://www.angelcode.com/angelscript/sdk/docs/manual/doc_datatypes_funcptr.html) (`funcdef`) cannot be used with `shared` functions or methods in `shared` classes.
 
   > **Tip:** A better alternative is to use an interface instead of a function declaration. Classes that implement the interface can be instantiated with any dependencies, whereas a function definition only has access to the parameters defined in the function definition.
+
+### What are Husks?
+
+[Husks](/Easy3D/Husk/) are bare-bones blobs that are created for every player when they join and after every death, even when they are assigned to the spectator team. They are useful for various reasons:
+
+- Preventing a `Connecting...` message from incessantly flashing on the screen above the 3D rendering layer.
+- Attributing kills to players via the CBlob `SetPlayerOfRecentDamage()` method.
+- Displaying kills and deaths in the killfeed and statistics on the scoreboard via the CBlob `server_Hit()` and `server_Die()` methods.
+- Checking for player input on the server via the CBlob key-related methods.
+- Storing properties for the life of the blob (i.e. until the player is killed) via the CBlob set and get methods.
