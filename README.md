@@ -59,15 +59,12 @@ A [King Arthur's Gold](https://kag2d.com/) mod that provides the tools to more e
 
 ## Usage
 
-1. Put the Easy3D folder in your `Mods`` folder.
+1. Put the [Easy3D](/Easy3D/) folder in your `Mods` folder.
 2. Add `Easy3D` to a new line in `mods.cfg` above any mod that will use it.
-3. Add the following scripts to your gamemode config:
-
-   - `InterpolationHooks.as`
-
-   > **Tip:** Refer to [`ExampleMod/Default/Rules.cfg`](/ExampleMod/Default/Rules.cfg) as an example.
-
+3. Add `Easy3DHooks.as` to the `scripts` list in your rules `.cfg` file above any scripts that will reference Easy3D.
 4. Add `#include "Easy3D.as"` to the top of any scripts that require it.
+
+> **Tip:** Refer to the examples provided in the [Examples](#examples) section below if the final two steps are unclear.
 
 ## Examples
 
