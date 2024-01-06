@@ -24,7 +24,8 @@ void onInit(CRules@ this)
 	// Animate
 	@animator = Animator(model);
 	@animation = CompositeAnimation()
-		.Add(BasicAnimation());
+		.Add(Repeat(BasicAnimation(), 2)) // Rotate one way for two revolutions
+		.Add(Reverse(BasicAnimation())); // Rotate the opposite direction once
 }
 
 void Render(int id)

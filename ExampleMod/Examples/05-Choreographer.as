@@ -25,7 +25,7 @@ void onInit(CRules@ this)
 
 	@choreographer = Choreographer();
 	choreographer.Register("forward", animator, BasicAnimation());
-	choreographer.Register("reverse", animator, Rate(BasicAnimation(), -1));
+	choreographer.Register("reverse", animator, Reverse(BasicAnimation()));
 
 	choreographer.Transition("forward");
 }
