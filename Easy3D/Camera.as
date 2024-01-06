@@ -43,11 +43,6 @@ shared class Camera
 		return rotation;
 	}
 
-	float[] getModelMatrix()
-	{
-		return modelMatrix;
-	}
-
 	float[] getViewMatrix()
 	{
 		return viewMatrix;
