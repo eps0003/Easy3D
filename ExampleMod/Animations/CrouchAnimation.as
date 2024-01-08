@@ -7,14 +7,7 @@ shared class BodyCrouchAnimation : IAnimation
 
 	void Animate(float t, Vec3f& origin, Vec3f& translation, Vec3f& scale, Quaternion& rotation)
 	{
-		Vec2f mousePos = getControls().getInterpMouseScreenPos();
-		Vec2f screenPos = getDriver().getScreenDimensions();
-
-		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
-		float percentageY = (mousePos.y / screenPos.y) - 0.5f;
-
 		translation = Vec3f(0, -0.375, 0);
-		rotation = Quaternion().SetFromEulerDegrees(0 /*-100 * percentageY*/, 400 * percentageX, 0);
 	}
 }
 

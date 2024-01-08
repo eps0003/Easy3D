@@ -10,13 +10,8 @@ shared class DanceBodyAnimation : IAnimation
 		float t2 = t * Maths::Pi * 4.0f;
 		float t3 = Maths::Cos(t2);
 
-		Vec2f mousePos = getControls().getInterpMouseScreenPos();
-		Vec2f screenPos = getDriver().getScreenDimensions();
-
-		float percentageX = (mousePos.x / screenPos.x) - 0.5f;
-
 		translation = Vec3f(0, -0.04f * t3, 0);
-		rotation = Quaternion().SetFromEulerDegrees(-4 - 4 * t3, 400 * percentageX, 0);
+		rotation = Quaternion().SetFromEulerDegrees(-4 - 4 * t3, 0, 0);
 	}
 }
 
