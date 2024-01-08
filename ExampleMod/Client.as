@@ -40,7 +40,7 @@ void onInit(CRules@ this)
 		.Append(CompositeModel(upperRightLeg).Append(CompositeModel(lowerRightLeg)));
 
 	// Arrange
-	body.SetTranslation(Vec3f(0, -0.375 * 1.5f, 2.0f));
+	body.SetTranslation(Vec3f(0, -0.375 * 1.5f, 0));
 	body.SetRotation(Quaternion().SetFromEulerDegrees(0, 180, 0));
 	head.SetTranslation(Vec3f(0, 0.75f, 0));
 	upperLeftArm.SetTranslation(Vec3f(-0.25f, 0.75f, 0));
@@ -82,6 +82,17 @@ void onInit(CRules@ this)
 	Animator upperRightLegAnimator(upperRightLeg);
 	Animator lowerRightLegAnimator(lowerRightLeg);
 
+	lowerChoreographer.Register("idle", bodyAnimator, DefaultAnimation());
+	upperChoreographer.Register("idle", headAnimator, DefaultAnimation());
+	upperChoreographer.Register("idle", upperLeftArmAnimator, DefaultAnimation());
+	upperChoreographer.Register("idle", lowerLeftArmAnimator, DefaultAnimation());
+	upperChoreographer.Register("idle", upperRightArmAnimator, DefaultAnimation());
+	upperChoreographer.Register("idle", lowerRightArmAnimator, DefaultAnimation());
+	lowerChoreographer.Register("idle", upperLeftLegAnimator, DefaultAnimation());
+	lowerChoreographer.Register("idle", lowerLeftLegAnimator, DefaultAnimation());
+	lowerChoreographer.Register("idle", upperRightLegAnimator, DefaultAnimation());
+	lowerChoreographer.Register("idle", lowerRightLegAnimator, DefaultAnimation());
+
 	lowerChoreographer.Register("run", bodyAnimator, BodyRunAnimation());
 	upperChoreographer.Register("run", headAnimator, HeadRunAnimation());
 	upperChoreographer.Register("run", upperLeftArmAnimator, UpperLeftArmRunAnimation());
@@ -122,27 +133,37 @@ void onInit(CRules@ this)
 	lowerChoreographer.Register("dance", upperRightLegAnimator, DanceUpperLegAnimation(-2));
 	lowerChoreographer.Register("dance", lowerRightLegAnimator, DanceLowerLegAnimation());
 
-	upperChoreographer.Transition("dance");
-	lowerChoreographer.Transition("dance");
+	upperChoreographer.Transition("idle");
+	lowerChoreographer.Transition("idle");
 }
 
 void onTick(CRules@ this)
 {
-	// if (getControls().isKeyPressed(KEY_KEY_2))
-	// {
-	// 	upperChoreographer.Transition("gun_aim");
-	// 	lowerChoreographer.Transition("crouch");
-	// }
-	// else if (getControls().isKeyPressed(KEY_KEY_1))
-	// {
-	// 	upperChoreographer.Transition("gun_hold");
-	// 	lowerChoreographer.Transition("run");
-	// }
-	// else
-	// {
-	// 	upperChoreographer.Transition("run");
-	// 	lowerChoreographer.Transition("run");
-	// }
+	if (getControls().isKeyPressed(KEY_KEY_4))
+	{
+		upperChoreographer.Transition("dance");
+		lowerChoreographer.Transition("dance");
+	}
+	else if (getControls().isKeyPressed(KEY_KEY_3))
+	{
+		upperChoreographer.Transition("gun_aim");
+		lowerChoreographer.Transition("crouch");
+	}
+	else if (getControls().isKeyPressed(KEY_KEY_2))
+	{
+		upperChoreographer.Transition("gun_hold");
+		lowerChoreographer.Transition("run");
+	}
+	else if (getControls().isKeyPressed(KEY_KEY_1))
+	{
+		upperChoreographer.Transition("run");
+		lowerChoreographer.Transition("run");
+	}
+	else
+	{
+		upperChoreographer.Transition("idle");
+		lowerChoreographer.Transition("idle");
+	}
 }
 
 void Render(int id)
