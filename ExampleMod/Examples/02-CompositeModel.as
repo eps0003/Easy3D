@@ -41,10 +41,14 @@ void onInit(CRules@ this)
 	head.SetTranslation(Vec3f(0, 0.75f, 0));
 	upperLeftArm.SetTranslation(Vec3f(-0.25f, 0.75f, 0));
 	lowerLeftArm.SetTranslation(Vec3f(-0.125f, -0.375f, -0.125f));
+	lowerLeftArm.SetScale(Vec3f(0.99f));
 	upperRightArm.SetTranslation(Vec3f(0.25f, 0.75f, 0));
 	lowerRightArm.SetTranslation(Vec3f(0.125f, -0.375f, -0.125f));
+	lowerRightArm.SetScale(Vec3f(0.99f));
 	lowerLeftLeg.SetTranslation(Vec3f(-0.125f, -0.375f, 0.125f));
+	lowerLeftLeg.SetScale(Vec3f(0.99f));
 	lowerRightLeg.SetTranslation(Vec3f(0.125f, -0.375f, 0.125f));
+	lowerRightLeg.SetScale(Vec3f(0.99f));
 }
 
 void Render(int id)
