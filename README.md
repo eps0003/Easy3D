@@ -385,7 +385,7 @@ Pause(animation, 0.5f, 2.0f);
 Scales the duration of an animation by a specified rate, even allowing animations to be reversed.
 
 ```angelscript
-// Play `animation`` at half speed
+// Play `animation` at half speed
 Rate(animation, 0.5f);
 
 // Play `animation` at double speed
