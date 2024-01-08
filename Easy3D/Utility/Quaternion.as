@@ -13,6 +13,21 @@ shared class Quaternion
 		this.w = w;
 	}
 
+	Quaternion(float[] arr)
+	{
+		if (arr.size() == 4)
+		{
+			x = arr[0];
+			y = arr[1];
+			z = arr[2];
+			w = arr[3];
+		}
+		else
+		{
+			error("Invalid array length when initializing Quaternion: " + arr.size());
+		}
+	}
+
 	bool opEquals(const Quaternion &in q)
 	{
 		return x == q.x && y == q.y && z == q.z && w == q.w;
@@ -44,7 +59,17 @@ shared class Quaternion
 		w = w*q.w - x*q.x - y*q.y - z*q.z;
 	}
 
-	Quaternion opNeg()
+	Quaternion opDiv(const Quaternion &in q)
+	{
+		return this * -q;
+	}
+
+	void opDivAssign(const Quaternion &in q)
+	{
+		this = this / q;
+	}
+
+	Quaternion opNeg() const
 	{
 		return inverse();
 	}
